@@ -18,7 +18,7 @@ module.exports = {
             let stage = 0;
             try {
                 stage = getStage(today, info);
-
+                
             } 
             catch(err) {
                 message.reply(err);
@@ -34,7 +34,7 @@ module.exports = {
                     if (today < date) {
                         let team1 = match.competitors[0];
                         let team2 = match.competitors[1];
-                        sendMatch(team1,team2,date,match);
+                        sendMatch(team1, team2, date, match);
                         break;
 
                     }
@@ -48,15 +48,8 @@ module.exports = {
 					//Checks if the input is a valid alias of a team
 					let team = teamFinder.find(args[0]);
 					let teamName = '';
-					if(team != undefined) {
-                        teamName = team[0];
+					teamName = team[0];
 
-					}
-					else {
-                        throw 'input was not a valid team name.';
-                        
-                    }
-                    
                     //Finds next match for the team
                     for (let counter = 0; counter < info.data.stages[stage].matches.length; counter++) {
                         let match = info.data.stages[stage].matches[counter];
@@ -66,7 +59,6 @@ module.exports = {
                             let team1 = match.competitors[0];
                             let team2 = match.competitors[1];
                             sendMatch(team1,team2,date,match);
-                            console.log((Date.now() - today)/1000);
                             break;
 
                         }
@@ -82,27 +74,26 @@ module.exports = {
 
         })
 
-        function sendMatch(team1,team2,date,match) {
+        function sendMatch(team1, team2, date, match) {
             let embedDate = new Discord.RichEmbed()
                 .setTitle('Next Match')
-                .addField(team1.name+' vs '+team2.name, 'Date: '+date.toLocaleString())
+                .addField(team1.name + ' vs ' + team2.name, 'Date: ' + date.toLocaleString())
                 .setColor(team1.primaryColor)
-                .setURL('https://overwatchleague.com/en-us/match/'+match.id);
+                .setURL('https://overwatchleague.com/en-us/match/' + match.id);
             message.channel.send(embedDate);
         }
 
         function getStage(today, info) {
+            let stageEndDate = 0;
+            let finalWeek = 0;
+
             for (let counter = 0; counter < info.data.stages.length; counter++) {
-                if (counter > 0) {
-                    if ((info.data.stages[counter-1].weeks[0].endDate < today) && (info.data.stages[counter].weeks[4].endDate > today)) {
-                        return counter;
-                    }
-                }
-                else {
-                    if(info.data.stages[counter].weeks[4].endDate > today) {
-                        return counter;
-                    }
-                
+                finalWeek = info.data.stages[counter].weeks.length - 1;
+                stageEndDate = info.data.stages[counter].weeks[finalWeek].endDate;
+
+                if(stageEndDate > today) {
+                    return counter;
+
                 }
 
             }
