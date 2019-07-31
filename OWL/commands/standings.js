@@ -16,13 +16,8 @@ module.exports = {
 					//Checks if the input is an alias of a team
 					let team = teamFinder.find(args[0]);
 					let teamName = '';
-					if(team != undefined) {
-						teamName = team[0];
-					}
-					else {
-						throw "input was not a valid team name.";
-					}
-
+					teamName = team[0];
+					
 					//Turns html from request to an object
 					let info = JSON.parse(body);						
 
@@ -34,10 +29,11 @@ module.exports = {
 						}
 
 					});	
-				} catch(err) {
+				} 
+				catch(err) {
 					message.reply(err);
-				}	
-						
+
+				}		
 
 			}
 			
@@ -46,10 +42,12 @@ module.exports = {
 		function sendStats(team) {
 			//Creates and sends embedded message with the standings info
 			let embedTeam = new Discord.RichEmbed()
-				.setColor('#'+team.competitor.primaryColor)
+				.setColor('#' + team.competitor.primaryColor)
 				.setThumbnail(team.competitor.logo)
 				.setTitle(team.competitor.name)
-				.addField('Standings','Placement: '+team.placement+'\nMatches Won: '+team.records[0].matchWin+'\nMatches Lost: '+team.records[0].matchLoss);
+				.addField('Standings', 'Placement: ' + team.placement
+					+ '\nMatches Won: ' + team.records[0].matchWin 
+					+ '\nMatches Lost: ' + team.records[0].matchLoss);
 			message.channel.send(embedTeam);
 
 		}
