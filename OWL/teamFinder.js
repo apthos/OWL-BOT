@@ -29,8 +29,15 @@ module.exports = {
         	return team.includes(arg);
 
 		});
+		
+		if(validTeam != undefined) {
+			return validTeam;
 
-		return validTeam;
+		}
+		else {
+			throw 'input was not a valid team name.';
+
+		}
     
 	}
 
