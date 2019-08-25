@@ -3,7 +3,7 @@ const request = require('request');
 
 module.exports = {
 	name: 'stream',
-	description: 'Overwatch League Information!',
+	description: 'Overwatch League Livestream!',
 	usage: '!owl stream',
 	execute(message, args) {
 		const url = "https://api.overwatchleague.com/v2/streams";
