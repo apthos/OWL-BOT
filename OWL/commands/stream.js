@@ -8,7 +8,6 @@ module.exports = {
 	execute(message, args) {
 		const url = "https://api.overwatchleague.com/v2/streams";
 
-		//Finding team
 		request(url, function(error, response, body){
 			if (!error) {
 				try {
@@ -33,8 +32,6 @@ module.exports = {
 			}
 			
 		})
-
-
 
 	}
 
