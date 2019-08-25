@@ -10,6 +10,7 @@ module.exports = {
     description: 'Help with commands',
     usage: '!owl help <command name> or !owl help for list of all commands',
     execute(message, args) {
+        //Sends info of every command
         if(args.length == 0) {
             commands.forEach(function (command) {
                 message.channel.send('**' + command.name.toUpperCase() + ':**'
@@ -20,21 +21,28 @@ module.exports = {
 
         }
         else {
+            //Sends info for requested command
             try {
-                let commandName = '';
+                let foundCommand = false;
+                let requestedCommand = {};
+
+                //Finds and grabs requested command
                 commands.forEach(function (command) {
-                    if (args == command.name) {
-                        commandName = command.name;
-                        break;
+                    console.log(command.name.toUpperCase());
+                    if (args[0] == command.name) {
+                        foundCommand = true;
+                        requestedCommand = command;
 
                     }
 
                 });
-
-                if (commandName != '') {
-                    message.channel.send('**' + commandName.name.toUpperCase() + ':**'
-                    + '\nDescription: ' + commandName.description
-                    + '\nUsage: ' + commandName.usage);
+                
+                //Checks if command was found
+                if (foundCommand) {
+                    //Sends command info
+                    message.channel.send('**' + requestedCommand.name.toUpperCase() + ':**'
+                        + '\nDescription: ' + requestedCommand.description
+                        + '\nUsage: ' + requestedCommand.usage);
 
                 }
                 else {
